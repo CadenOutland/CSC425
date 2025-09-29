@@ -65,8 +65,14 @@ This folder contains Thunder Client test requests for the Backend Example API.
 ```
 
 ## How to Use:
+POST /api/messages → Create a new message
 
-1. Install Thunder Client extension in VS Code
-2. Start the server: `npm run dev`
-3. Import the collection or create requests manually using the URLs above
-4. Test each endpoint and verify the response format
+GET /api/messages → Get all messages
+
+GET /api/messages/:id → Get a message by ID
+
+PUT /api/messages/:id → Update a message by ID
+
+DELETE /api/messages/:id → Delete a message by ID
+
+Health
