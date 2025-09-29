@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "Backend Example API (with tests)",
+    "description": "Collection with basic tests for messages and users endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function() {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has success true', function() {",
+              "  var json = pm.response.json();",
+              "  pm.expect(json.success).to.eql(true);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Create Message - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Created - status 201', function() { pm.response.to.have.status(201); });",
+                  "pm.test('Response success true', function() { pm.expect(pm.response.json().success).to.eql(true); });",
+                  "pm.test('messageData exists', function() { pm.expect(pm.response.json().data.messageData).to.exist; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"author\": \"Postman Test\",\n  \"text\": \"Created from collection test\",\n  \"isRead\": false\n}" },
+            "url": { "raw": "http://localhost:3000/api/messages", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","messages"] }
+          }
+        },
+        {
+          "name": "Get All Messages - Success",
+          "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/messages", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","messages"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Status 200', function(){pm.response.to.have.status(200);});","pm.test('success true', function(){pm.expect(pm.response.json().success).to.eql(true);});"] , "type":"text/javascript" } }]
+        },
+        {
+          "name": "Get Message by ID - Not Found (error case)",
+          "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/messages/000000000000000000000000", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","messages","000000000000000000000000"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Not found or 400/404', function(){ pm.expect([400,404,500]).to.include(pm.response.code); });"] , "type":"text/javascript" } }]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User - Success",
+          "event": [{ "listen":"test","script":{ "exec":["pm.test('Created user 201', function(){pm.response.to.have.status(201);});","pm.test('Response success true', function(){pm.expect(pm.response.json().success).to.eql(true);});","pm.test('user exists', function(){pm.expect(pm.response.json().data.user).to.exist;});"],"type":"text/javascript"}}],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test.user+postman@example.com\"\n}" }, "url": { "raw": "http://localhost:3000/api/users", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","users"] } }
+        },
+        {
+          "name": "Get All Users - Success",
+          "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/users", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","users"] } },
+          "event": [{ "listen":"test","script":{ "exec":["pm.test('Status 200', function(){pm.response.to.have.status(200);});","pm.test('success true', function(){pm.expect(pm.response.json().success).to.eql(true);});"],"type":"text/javascript"}}]
+        },
+        {
+          "name": "Get User by ID - Invalid ID (error case)",
+          "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/users/invalid-id", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","users","invalid-id"] } },
+          "event": [{ "listen":"test","script":{ "exec":["pm.test('Bad request 400', function(){ pm.expect(pm.response.code).to.be.oneOf([400,404]); });"],"type":"text/javascript"}}]
+        }
+      ]
+    }
+  ]
+}
