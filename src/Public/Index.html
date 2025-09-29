@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login • D5 Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;background:#0f172a}
+    .card{width:360px;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:24px}
+    h1{margin:0 0 12px;font-size:20px}
+    label{display:block;margin:12px 0 6px;color:#111827;font-weight:600}
+    input{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;font-size:14px}
+    button{width:100%;padding:10px 12px;border:0;border-radius:10px;margin-top:16px;font-weight:700;cursor:pointer;background:#2563eb;color:#fff}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .msg{margin-top:12px;font-size:14px}
+    .ok{color:#065f46}
+    .err{color:#b91c1c}
+    small{color:#6b7280}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Login</h1>
+      <form id="loginForm" novalidate>
+        <label for="userid">User ID</label>
+        <input id="userid" name="userid" autocomplete="username" required minlength="3" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required minlength="6" />
+        <button id="btn" type="submit">Validate</button>
+        <div id="msg" class="msg"></div>
+        <small>Demo creds come from your server’s <code>.env</code>.</small>
+      </form>
+    </div>
+  </div>
+  <script src="./script.js" defer></script>
+</body>
+</html>
